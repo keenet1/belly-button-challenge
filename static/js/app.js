@@ -155,7 +155,7 @@ function bubbleChart(selectedSample) {
 
         // Define the layout
         let layout = {
-            title : "Bacterial Counts Per Sample",
+            title : "Bacteria, OTU IDs, and Value Counts Per Sample",
             hovermode : "closest",
             xaxis : {title: "OTU ID",}
         };
@@ -166,18 +166,68 @@ function bubbleChart(selectedSample) {
 }
 
 // GaugeChart function
+function gaugeChart(selectedSample) {
 
+    // Fetch all of the data using D3
+    d3.json(url).then((data) => {
 
+        // Retreive the metadata
+        let metadata = data.metadata;
 
+        // Filter the data based on the sample value
+        let filteredValues = metadata.filter(meta => meta.id == selectedSample);
 
+        // Log the filtered array of metadata objects
+        console.log(filteredValues)
 
+        // Assign the first value
+        let obj = filteredValues[0]
 
+        // Use Object.values to get each key:value pair from the metadata chart (i.e. demographics chart)
+        let weeklyWashFrequency = Object.values(obj)[6]
 
+        // Set up the trace for the gauge chart
+        let trace2 = {
+            domain : {x : [0,1], y : [0,1]},
+            value : weeklyWashFrequency,
+            title : {
+                text : "<b>Belly Button Washing Frequency</b><br>Scrubs per Week",
+                font : {color : "black", size : 15}
+            },
+            type : "indicator",
+            mode : "gauge+number",
+            gauge : {
+                axis : { range : [null, 10], tickwidth : 1, tickcolor : "black" },
+                bar : { color : "green" },
+                steps : [
+                    {range : [0,1], color : "rgb(235, 195, 350)"},
+                    {range : [1,2], color : "rgb(220, 190, 345)"},
+                    {range : [2,3], color : "rgb(205, 185, 340)"},
+                    {range : [3,4], color : "rgb(190, 180, 335)"},
+                    {range : [4,5], color : "rgb(175, 175, 330)"},
+                    {range : [5,6], color : "rgb(160, 170, 325)"},
+                    {range : [6,7], color : "rgb(145, 165, 320)"},
+                    {range : [7,8], color : "rgb(130, 160, 315)"},
+                    {range : [8,9], color : "rgb(115, 155, 310)"},
+                    {range : [9,10], color : "rgb(100, 150, 305"},
+                ]
+            }
+        };
 
+        // Define the layout
+        let layout = {
+            width: 500,
+            height: 400,
+            margin: { t: 25, r: 25, l: 25, b: 25 },
+            font: { color: "darkblue", family: "Arial" }
+          };
+          
+        // Use Plotly to create the gauge chart
+        Plotly.newPlot('gauge', [trace2], layout)
+    });
+};
 
-
-
-// Create a Function that updates dashboard when the sample is changed
+// Create a Function that updates the dashboard when the sample is changed
 function optionChanged(selectedSample) { 
 
     // Log the new value
