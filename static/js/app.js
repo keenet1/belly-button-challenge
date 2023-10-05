@@ -51,7 +51,7 @@ function metaData(selectedSample) {
         let filteredValues = metadata.filter(meta => meta.id == selectedSample);
 
         // Log the filtered array of metadata objects
-        console.log(filteredValue)
+        console.log(filteredValues)
 
         // Assign the first value
         let obj = filteredValues[0]
@@ -98,13 +98,13 @@ function barChart(selectedSample) {
         let yticks = otu_ids.slice(0,10).map(id => `OTU ${id}`).reverse();
         let labels = otu_labels.slice(0,10).reverse();
 
-        // Set up the trace
+        // Set up the trace for the bar chart
         let trace = {
-            x: xticks,
-            y: yticks,
-            text: labels,
-            type: "bar",
-            orientation: "h"
+            x : xticks,
+            y : yticks,
+            text : labels,
+            type : "bar",
+            orientation : "h"
         };
 
         // Define the layout
@@ -118,6 +118,63 @@ function barChart(selectedSample) {
 };
 
 // BubbleChart Function
+function bubbleChart(selectedSample) {
+
+    // Fetch all of the data using D3
+    d3.json(url).then((data) => {
+
+        // Retreive the sample data
+        let sampleData = data.samples;
+
+        // Filter the sample data based on the value of the sample
+        let filteredValues = sampleData.filter(sample => sample.id == selectedSample);
+
+        // Assign the first value
+        let obj = filteredValues[0];
+
+        // Get the sample_values, otu_ids, and otu_labels
+        let sample_values = obj.sample_values;
+        let otu_ids = obj.otu_ids;
+        let otu_labels = obj.otu_labels;
+        
+        // Log the data to the console
+        console.log(sample_values, otu_ids,otu_labels);
+
+        // Set up the trace for the bubble chart
+        let trace1 = {
+            x : otu_ids,
+            y : sample_values,
+            text : otu_labels,
+            mode : "markers",
+            marker : {
+                size : sample_values,
+                color : otu_ids,
+                colorscale : "Earth"
+            }
+        };
+
+        // Define the layout
+        let layout = {
+            title : "Bacterial Counts Per Sample",
+            hovermode : "closest",
+            xaxis : {title: "OTU ID",}
+        };
+
+        // Use Plotly to create the bubble chart
+        Plotly.newPlot("bubble", [trace1], layout);
+    });
+}
+
+// GaugeChart function
+
+
+
+
+
+
+
+
+
 
 
 // Create a Function that updates dashboard when the sample is changed
@@ -127,10 +184,10 @@ function optionChanged(selectedSample) {
     console.log(selectedSample); 
 
     // Call all functions 
-    buildMetadata(selectedSample);
-    buildBarChart(selectedSample);
-    buildBubbleChart(selectedSample);
-    buildGaugeChart(selectedSample);
+    metaData(selectedSample);
+    barChart(selectedSample);
+    bubbleChart(selectedSample);
+    gaugeChart(selectedSample);
 };
 
 // Initialize
