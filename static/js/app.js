@@ -96,13 +96,13 @@ function barChart(selectedSample) {
         // Select the top 10 items (to be displayed in descending order)
         let xticks = sample_values.slice(0,10).reverse();
         let yticks = otu_ids.slice(0,10).map(id => `OTU ${id}`).reverse();
-        let labels = otu_labels.slice(0,10).reverse();
+        let hovertext = otu_labels.slice(0,10).reverse();
 
         // Set up the trace for the bar chart
         let trace = {
             x : xticks,
             y : yticks,
-            text : labels,
+            text : hovertext,
             type : "bar",
             orientation : "h"
         };
