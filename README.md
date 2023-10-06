@@ -3,8 +3,9 @@
 <font size="3">** Creating an Interactive Belly Button Biodiversity Dashboard**  
 **Contributor:** Thomas Keene
 ---
+
 ## Dashboard
-Please use this link to view the dashboard: 
+Please use this link to view the dashboard: https://keenet1.github.io/belly-button-challenge/
 
 ## Background
 For this assignment, I built an interactive dashboard to explore the Belly Button Biodiversity dataset, which catalogs the microbes that colonize human navels.
