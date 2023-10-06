@@ -18,6 +18,7 @@ The primary interactive feature of the dashboard is the drop-down menu used for 
 Some coding I looked at for inspiration:
 - https://github.com/yeyanwang/belly-button-challenge
 - https://github.com/JeremyTallant/belly-button-challenge
+
 Helpful websites:
 - https://plotly.com/javascript/colorscales/
 - https://plotly.com/javascript/gauge-charts/
